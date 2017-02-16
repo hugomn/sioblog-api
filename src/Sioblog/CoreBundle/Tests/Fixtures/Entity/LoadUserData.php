@@ -20,18 +20,8 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface {
      * @param  ObjectManager $manager Manager
      */
     public function load(ObjectManager $manager) {
-        $userStatus = new UserStatus();
-        $userStatus->setId(UserStatus::USERSTATUS_VERIFIED);
-        $userStatus->setName('Verified');
-        $manager->persist($userStatus);
 
-        // Creates user
         $user = new User();
-        $user->setFirstname("Hugo");
-        $user->setLastname("Magalhães");
-        $user->setAvatartype(4);
-        $user->setLocale("pt_BR");
-        $user->setTimezone("America/Sao_Paulo");
         $user->setCreated(new \DateTime());
         $user->setUpdated(new \DateTime());
         $user->setAlgorithm("sha1");
@@ -39,7 +29,6 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface {
         $user->setUsernameCanonical("hugomn");
         $user->setEmail("hugomn@gmail.com");
         $user->setEmailCanonical("hugomn@gmail.com");
-        $user->setUserstatus($userStatus);
         $user->setEnabled(1);
         $user->setPassword("cf9304361684cbc005c56a5f55c93af6481bdd52");
         $user->setLocked(0);

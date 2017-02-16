@@ -1,6 +1,6 @@
 <?php
 
-namespace Sioblog\ApiBundle\Tests\Fixtures\Entity;
+namespace Sioblog\CoreBundle\Tests\Fixtures\Entity;
 
 use Sioblog\ApiBundle\Entity\AccessToken;
 use Sioblog\ApiBundle\Entity\Client;
@@ -45,10 +45,6 @@ class LoadAuthData extends AbstractFixture implements OrderedFixtureInterface, C
         // Creates user
         $userManager = $this->container->get('fos_user.user_manager');
         $user = $userManager->createUser();
-        $user->setFirstname("Hugo");
-        $user->setLastname("Magalhães");
-        $user->setLocale("pt_BR");
-        $user->setTimezone("America/Sao_Paulo");
         $user->setCreated(new \DateTime());
         $user->setUpdated(new \DateTime());
         $user->setAlgorithm("sha1");
@@ -69,8 +65,8 @@ class LoadAuthData extends AbstractFixture implements OrderedFixtureInterface, C
         $client = new Client();
         $client->setRandomId("2e7h7e439rmsg0wk4sgo0kgo8o4088cscsso484k04swk0swoc");
         $client->setSecret("5fwm23zxtns4ogc0gwgskgo804cgowg8oggkk8cs48cskows4s");
-        $client->setRedirectUris(unserialize('a:1:{i:0;s:21:"http://sioblog.com/";}'));
-        $client->setAllowedGrantTypes(unserialize('a:6:{i:0;s:8:"password";i:1;s:13:"refresh_token";i:2;s:18:"client_credentials";i:3;s:38:"http://sioblog.local/grants/facebook";i:4;s:5:"token";i:5;s:18:"authorization_code";}'));
+        $client->setRedirectUris(unserialize('a:1:{i:0;s:19:"http://sioblog.com/";}'));
+        $client->setAllowedGrantTypes(unserialize('a:6:{i:0;s:8:"password";i:1;s:13:"refresh_token";i:2;s:18:"client_credentials";i:3;s:36:"http://sioblog.local/grants/facebook";i:4;s:5:"token";i:5;s:18:"authorization_code";}'));
         $manager->persist($client);
 
         // Creates Api Access Token

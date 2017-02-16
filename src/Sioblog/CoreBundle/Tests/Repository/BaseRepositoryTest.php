@@ -20,7 +20,7 @@ abstract class BaseRepositoryTest extends WebTestCase {
 
         // Load fixtures
         $fixtures = array(
-            'Sioblog\CoreBundle\Tests\Fixtures\Entity\LoadUserData',
+            'Sioblog\CoreBundle\Tests\Fixtures\Entity\LoadAuthData',
             'Sioblog\CoreBundle\Tests\Fixtures\Entity\LoadArticleData');
         $this->loadFixtures($fixtures);
     }

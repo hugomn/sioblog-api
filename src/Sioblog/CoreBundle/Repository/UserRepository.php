@@ -18,4 +18,21 @@ use Sioblog\CoreBundle\Entity\User;
  */
 class UserRepository extends EntityRepository {
 
+    /**
+     * @param string $email
+     * @param QueryBuilder $qb
+     * @return integer
+     */
+    public function countDuplicates($email, QueryBuilder $qb = null) {
+        $em = $this->getEntityManager();
+        if (is_null($qb)) {
+            $qb = $em->createQueryBuilder();
+        }
+        $qb->select('count(u.id)')
+                ->from('SioblogCoreBundle:User', 'u')
+                ->where($qb->expr()->like($qb->expr()->upper('u.email'), "'" . strtoupper($email) . "'"));
+        $count = $qb->getQuery()->getSingleScalarResult();
+        return $count;
+    }
+
 }

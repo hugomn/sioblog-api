@@ -32,7 +32,7 @@ class UserManager extends FOSUserManager
      */
     public function processUser($user)
     {
-        $user->setUsername(StringHelper::slugify($user->getFirstname().' '.$user->getLastname()));
+        $user->setUsername($user->getEmail());
         $user->setEnabled(true);
         $user->setRoles(array('ROLE_USER'));
         $this->em->persist($user);

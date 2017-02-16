@@ -12,8 +12,8 @@
 namespace Sioblog\ApiBundle\Tests\Controller;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase as WebTestCase;
-use Sioblog\ApiBundle\Tests\Fixtures\Entity\LoadEventData;
-use Sioblog\ApiBundle\Tests\Fixtures\Entity\LoadAuthData;
+use Sioblog\CoreBundle\Tests\Fixtures\Entity\LoadArticleData;
+use Sioblog\CoreBundle\Tests\Fixtures\Entity\LoadAuthData;
 
 /**
  * Base class for all controller test classes.
@@ -37,8 +37,8 @@ abstract class BaseApiTest extends WebTestCase {
     public function setUp() {
         $this->client = static::createClient();
         $fixtures = array(
-            'Sioblog\ApiBundle\Tests\Fixtures\Entity\LoadAuthData',
-            'Sioblog\ApiBundle\Tests\Fixtures\Entity\LoadArticleData');
+            'Sioblog\CoreBundle\Tests\Fixtures\Entity\LoadAuthData',
+            'Sioblog\CoreBundle\Tests\Fixtures\Entity\LoadArticleData');
         $this->loadFixtures($fixtures);
         $this->accessToken = LoadAuthData::$accessToken;
         $this->apiClient = LoadAuthData::$client;

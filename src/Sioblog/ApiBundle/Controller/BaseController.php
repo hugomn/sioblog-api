@@ -108,6 +108,14 @@ class BaseController extends FOSRestController {
     }
 
     /**
+     * Retorna o manager de users do FosUserBundle.
+     * @return \FOS\UserBundle\Doctrine\UserManager
+     */
+    protected function getUserManager() {
+        return $this->get('fos_user.user_manager');
+    }
+
+    /**
      * Generates Api system log.
      * @param string $message Mensagem a ser incluida no log.
      * @param string $level Level do log. Default: error.

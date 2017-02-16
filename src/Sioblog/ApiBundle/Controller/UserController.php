@@ -181,22 +181,13 @@ class UserController extends BaseController
      *   }
      * )
      *
-     * @RequestParam(name="name", nullable=false, description="User's name")
      * @RequestParam(name="email", nullable=false, description="User's email")
      * @RequestParam(name="password", nullable=false, description="User's password")
      */
-    public function postUsersAction($name, $email, $password) {
+    public function postUsersAction($email, $password) {
         $user = $this->getUserManager()->createUser();
         if ($this->getUserRepository()->countDuplicates($email) > 0) {
             $this->throwBadRequest('User already exists.');
-        }
-        if (str_word_count($name) > 1) {
-            $firstName = substr($name, 0, stripos($name, ' '));
-            $user->setFirstname($firstName);
-            $lastName = substr($name, (strrpos($name, ' ') + 1));
-            $user->setLastname($lastName);
-        } else {
-            $user->setFirstname($name);
         }
         $user->setEmail($email);
         $user->setPlainPassword($password);

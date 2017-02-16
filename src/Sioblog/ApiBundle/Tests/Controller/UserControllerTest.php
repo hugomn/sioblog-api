@@ -23,7 +23,6 @@ class UserControllerTest extends BaseApiTest {
     public function testPostUsersAction() {
         $route = $this->getApiUrl('api_1_post_users');
         $response = $this->requestPost($route, array(
-            'name' => 'John Doe',
             'email' => 'johndoe@sioblog.com',
             'password' => 'foobar'
         ));
@@ -32,15 +31,11 @@ class UserControllerTest extends BaseApiTest {
         // Assert a valid json is returned
         $this->assertJsonResponse($response, 200);
 
-        // Assert firstname is returned
-        $this->assertEquals($array['firstname'], 'John');
-
         // Assert an int id is returned
         $this->assertInternalType('int', $array['id']);
 
         // Create new user to check duplicated e-mail
         $response = $this->requestPost($route, array(
-            'name' => 'Doe John',
             'email' => 'johndoe@sioblog.com',
             'password' => 'foobar'
         ));

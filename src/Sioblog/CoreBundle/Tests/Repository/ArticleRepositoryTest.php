@@ -19,7 +19,7 @@ namespace Sioblog\CoreBundle\Tests\Repository;
 class ArticleRepositoryTest extends BaseRepositoryTest {
 
     public function testGetCount() {
-        $article = $this->getArticleRepository()->findAll();
+        $articles = $this->getArticleRepository()->findAll();
         $this->assertEquals(count($articles), 1);
     }
 
