@@ -1,0 +1,42 @@
+imports:
+    - { resource: config.yml }
+
+framework:
+    router:
+        resource: "%kernel.root_dir%/config/routing_dev.yml"
+        strict_requirements: true
+    profiler: { only_exceptions: false }
+    test: ~
+    session:
+        storage_id: session.storage.filesystem
+
+web_profiler:
+    toolbar: "%debug_toolbar%"
+    intercept_redirects: "%debug_redirects%"
+
+monolog:
+    handlers:
+        doctrine:
+            bubble: false
+            action_level: DEBUG
+            type:  stream
+            path:  %kernel.logs_dir%/%kernel.environment%_doctrine.log
+            channels: doctrine
+        main:
+            type:  stream
+            path:  %kernel.logs_dir%/%kernel.environment%.log
+            level: INFO
+        console:
+            type:   console
+            bubble: false
+
+assetic:
+    use_controller: "%use_assetic_controller%"
+
+liip_functional_test: ~
+
+parameters:
+    app_host:         dev.api.sioblog.com:8080
+    app_scheme:       http
+    app_url:          %app_scheme%://%app_host%
+    app_short_url:    http://bit.ly

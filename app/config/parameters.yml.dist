@@ -1,0 +1,16 @@
+parameters:
+    database_driver:   pdo_mysql
+    database_port:     3306
+
+    mailer_transport:  smtp
+    mailer_host:       email-smtp.us-west-2.amazonaws.com
+    mailer_user:       sesuser
+    mailer_password:   sespassword
+    mailer_port:       587
+    mailer_encryption: tls
+    locale:            pt_BR
+    secret:            SioblogComSecretTokenForSecurity423
+
+    debug_toolbar:          true
+    debug_redirects:        false
+    use_assetic_controller: true

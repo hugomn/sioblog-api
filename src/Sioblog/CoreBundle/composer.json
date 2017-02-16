@@ -1,0 +1,22 @@
+{
+    "name": "sioblog/core",
+    "type": "symfony-bundle",
+    "description": "Sioblog API Core Bundle",
+    "keywords": [ "sioblog" ],
+    "homepage": "http://sioblog.com",
+    "license": "CC",
+    "authors": [
+        {
+            "name": "Hugo Magalhães",
+            "email": "hugomn@gmail.com"
+        }
+    ],
+    "require": {
+    },
+    "require-dev": {
+    },
+    "autoload": {
+        "psr-0": { "Sioblog\\CoreBundle": "" }
+    },
+    "target-dir": "Sioblog/CoreBundle"
+}

@@ -1,0 +1,14 @@
+sioblog_api:
+    resource: "@SioblogApiBundle/Resources/config/routes.yml"
+    type:     rest
+    prefix:   /
+
+sioblog_api_doc:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /doc
+
+fos_oauth_server_token:
+    resource: "@FOSOAuthServerBundle/Resources/config/routing/token.xml"
+
+fos_oauth_server_authorize:
+    resource: "@FOSOAuthServerBundle/Resources/config/routing/authorize.xml"

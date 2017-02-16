@@ -1,0 +1,7 @@
+# JMS Serializer
+jms_serializer:
+    metadata:
+        directories:
+            FOSUB:
+                namespace_prefix: "FOS\\UserBundle"
+                path: "@SioblogApiBundle/Resources/config/serializer"

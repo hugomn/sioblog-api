@@ -1,0 +1,57 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="platform.entity.user.class">Sioblog\CoreBundle\Entity\User</parameter>
+        <parameter key="platform.user.provider.class">Sioblog\ApiBundle\Provider\UserProvider</parameter>
+    </parameters>
+
+    <services>
+        <service id="platform.user.manager" class="Doctrine\ORM\EntityManager"
+                 factory-service="doctrine" factory-method="getManagerForClass">
+            <argument>%platform.entity.user.class%</argument>
+        </service>
+
+        <service id="platform.user.provider" class="%platform.user.provider.class%">
+            <argument type="service" id="platform.user.repository" />
+        </service>
+
+        <!-- Repositories -->
+        <service id="platform.user.repository"
+                 class="Sioblog\CoreBundle\Repository\UserRepository">
+            <factory service="doctrine.orm.default_entity_manager" method="getRepository" />
+            <argument>%platform.entity.user.class%</argument>
+        </service>
+
+        <!-- Managers -->
+        <service id="user_manager" class="Sioblog\ApiBundle\Service\UserManager">
+            <argument type="service" id="security.encoder_factory" />
+            <argument type="service" id="fos_user.util.username_canonicalizer" />
+            <argument type="service" id="fos_user.util.email_canonicalizer" />
+            <argument type="service" id="fos_user.object_manager" />
+            <argument>%platform.entity.user.class%</argument>
+            <argument type="service" id="doctrine.orm.default_entity_manager" />
+        </service>
+
+        <!-- Serialization Listeners -->
+        <service id="api.listener.user_serializer" class="Sioblog\ApiBundle\Listener\UserSerializationListener">
+          <argument type="service" id="logger" />
+          <argument type="service" id="security.authorization_checker" />
+          <tag name="jms_serializer.event_subscriber" />
+        </service>
+
+        <service id="api.listener.article_serializer" class="Sioblog\ApiBundle\Listener\ArticleSerializationListener">
+          <tag name="jms_serializer.event_subscriber" />
+        </service>
+
+        <!-- Twig -->
+        <service id="twig.extension.intl" class="Sioblog\ApiBundle\Twig\IntlExtension">
+            <tag name="twig.extension" />
+            <argument type="service" id="session" />
+        </service>
+
+    </services>
+</container>

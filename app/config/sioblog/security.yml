@@ -1,0 +1,7 @@
+parameters:
+    sioblog_security.event_roles_hierarchy:
+        ROLE_EVENT_PRODUCER: [ROLE_EVENT_MANAGER]
+        ROLE_EVENT_MANAGER:  [ROLE_EVENT_EDITOR]
+        ROLE_EVENT_EDITOR:   [ROLE_EVENT_CHECKIN]
+        ROLE_EVENT_CHECKIN:  [ROLE_EVENT_POS]
+        ROLE_EVENT_POS:      [ROLE_EVENT_PROMOTER]

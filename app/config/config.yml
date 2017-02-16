@@ -1,0 +1,202 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: jms/serializer.yml }
+    - { resource: gedmo/doctrine_extensions.yml }
+    - { resource: nelmio/cors.yml }
+    - { resource: sioblog/security.yml }
+    - { resource: stof/doctrine_extensions.yml }
+
+framework:
+    #esi:             ~
+    translator:      { fallback: "%locale%" }
+    secret:          "%secret%"
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: ~
+    form:            ~
+    csrf_protection: ~
+    validation:      { enable_annotations: true }
+    templating:
+        engines: ['twig']
+    default_locale:  "%locale%"
+    trusted_hosts:   ~
+    trusted_proxies: ~
+    session:
+        handler_id:  ~
+    fragments:       ~
+    http_method_override: true
+
+# Twig Configuration
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+    globals:
+        app_url: %app_url%
+
+# Assetic Configuration
+assetic:
+    debug:          "%kernel.debug%"
+    use_controller: false
+    bundles:        [ ]
+    filters:
+        cssrewrite: ~
+
+doctrine:
+    dbal:
+        driver:   "%database_driver%"
+        port:     "%database_port%"
+
+        # Env vars values
+        host:     "%database.host%"
+        dbname:   "%database.name%"
+        user:     "%database.user%"
+        password: "%database.password%"
+
+        charset:  UTF8
+
+    orm:
+        default_entity_manager: default
+        auto_generate_proxy_classes: %kernel.debug%
+        entity_managers:
+            default:
+                connection: default
+                mappings:
+                    SioblogApiBundle: ~
+                    SioblogCoreBundle: ~
+                    FOSUserBundle: ~
+                    FOSOAuthServerBundle: ~
+                    gedmo_translatable:
+                        type: annotation
+                        prefix: Gedmo\Translatable\Entity
+                        dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translatable/Entity"
+                        alias: GedmoTranslatable # (optional) it will default to the name set for the mapping
+                        is_bundle: false
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport:  "%mailer_transport%"
+    host:       "%mailer_host%"
+    username:   "%mailer_user%"
+    password:   "%mailer_password%"
+    port:       "%mailer_port%"
+    encryption: "%mailer_encryption%"
+    spool:      { type: memory }
+    antiflood:
+        threshold:            14
+        sleep:                1
+
+# FOS User
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: Sioblog\CoreBundle\Entity\User
+    service:
+        user_manager: user_manager
+
+# Sensio Framework
+sensio_framework_extra:
+    request:
+        converters: true
+    view:
+        annotations: true
+    router:
+        annotations: true
+
+#Api Documentation
+nelmio_api_doc:
+    name: Sio AG Blog REST API v1
+    sandbox:
+        authentication:
+            name: access_token      # access token name or query parameter name or header name
+            delivery: query          # `query`, `http`, and `header` are supported
+            type:     basic         # `basic`, `bearer` are supported
+            custom_endpoint: false  # default is `false`, if `true`, your user will be able to
+                                    # specify its own endpoint
+        enabled:  true              # default is `true`, you can set this parameter to `false`
+        accept_type: application/json           # default is `~` (`null`), if set, the value is
+        body_format:
+            formats: [ form, json ]             # array of enabled body formats,
+            default_format: form                # default is `form`, determines whether to send
+        request_format:
+            formats:                            # default is `json` and `xml`,
+                json: application/json          # override to add custom formats or disable
+                xml: application/xml            # the default formats
+            method: format_param    # default is `format_param`, alternately `accept_header`,
+            default_format: json    # default is `json`,
+                                    # default content format to request (see formats)
+
+# FOS Rest
+fos_rest:
+    serializer:
+        serialize_null: true
+    view:
+        view_response_listener: force
+        force_redirects:
+            html: true
+        formats:
+            json: true
+            xml: false
+            rss: false
+        templating_formats:
+            html: false
+        mime_types:
+            json: ['application/json', 'application/x-json', 'application/vnd.example-com.foo+json']
+            rss: ['application/rss+xml']
+            jpg: ['image/jpeg']
+            png: ['image/png']
+        failed_validation: HTTP_BAD_REQUEST
+    body_listener: true
+    param_fetcher_listener: force
+    allowed_methods_listener: true
+    access_denied_listener: true
+    format_listener:
+        rules:
+            - { path: '^/', priorities: ['json'], fallback_format: json, prefer_extension: false }
+            - { path: '^/doc', priorities: [ 'html', '*/*'], fallback_format: ~, prefer_extension: true }
+            # - { path: '^/oauth', priorities: ['json', 'html'], fallback_format: json, prefer_extension: false }
+    routing_loader:
+        default_format: json
+        include_format: false
+    exception:
+        enabled: true
+        codes:
+            'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
+        messages:
+            'Symfony\Component\Routing\Exception\ResourceNotFoundException': true
+            'Symfony\Component\HttpKernel\Exception\BadRequestHttpException': true
+
+# OAuth Server
+fos_oauth_server:
+    db_driver: orm
+    client_class:        Sioblog\ApiBundle\Entity\Client
+    access_token_class:  Sioblog\ApiBundle\Entity\AccessToken
+    refresh_token_class: Sioblog\ApiBundle\Entity\RefreshToken
+    auth_code_class:     Sioblog\ApiBundle\Entity\AuthCode
+    service:
+        user_provider: fos_user.user_provider.username_email
+        options:
+            supported_scopes: user
+            access_token_lifetime: 3600
+
+# Advanced Encoder to support legacy users
+fos_advanced_encoder:
+  encoders:
+    # default values for FOSUserBundle (Symfony2)
+    # see http://symfony.com/doc/current/reference/configuration/security.html
+    default:
+      algorithm: sha512
+      iterations: 5000
+      encode_as_base64: true
+    # legacy encoder used by sfGuard (symfony 1)
+    legacy:
+      algorithm: sha1
+      iterations: 1
+      encode_as_base64: false
+
+# Custom parameters
+parameters:
+    security.encoder.digest.class: Sioblog\CoreBundle\Security\MessageDigestPasswordEncoder
+
+    router.request_context.host: %app_host%
+    router.request_context.scheme: %app_scheme%

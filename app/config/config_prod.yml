@@ -1,0 +1,15 @@
+imports:
+    - { resource: config.yml }
+
+monolog:
+    handlers:
+        main:
+            type:  stream
+            path:  %kernel.logs_dir%/%kernel.environment%.log
+            level: ERROR
+
+parameters:
+    app_host:         www.sioblog.com
+    app_scheme:       https
+    app_url:          %app_scheme%://%app_host%
+    app_short_url:    http://bit.ly
