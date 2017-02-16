@@ -3,7 +3,7 @@ FOS\UserBundle\Model\User:
     properties:
         username:
             expose: true
-            groups: ['user_full']
+            groups: ['user_full', 'article_full']
         email:
             expose: true
-            groups: ['user_full']
+            groups: ['user_full', 'article_full']

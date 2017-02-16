@@ -27,7 +27,7 @@ class User extends BaseUser implements UserInterface, EncoderAwareInterface {
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      * @Expose
-     * @Groups({"user_full"})
+     * @Groups({"article_full", "user_full"})
      */
     protected $id;
 

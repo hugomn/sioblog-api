@@ -23,6 +23,8 @@ class Article
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Expose
+     * @Groups({"article_full"})
      */
     private $id;
 
@@ -31,12 +33,16 @@ class Article
      *
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     * @Expose
+     * @Groups({"article_full"})
      */
     private $user;
     /**
      * @var string
      *
      * @ORM\Column(name="title", type="text")
+     * @Expose
+     * @Groups({"article_full"})
      */
     private $title;
 
@@ -44,6 +50,8 @@ class Article
      * @var string
      *
      * @ORM\Column(name="content", type="text")
+     * @Expose
+     * @Groups({"article_full"})
      */
     private $content;
 
@@ -51,13 +59,15 @@ class Article
      * @ORM\Column(name="created", type="datetime")
      * @Gedmo\Timestampable(on="create")
      * @Expose
-     * @Groups({"user_full"})
+     * @Groups({"article_full"})
      */
     private $created;
 
     /**
      * @ORM\Column(name="updated", type="datetime")
      * @Gedmo\Timestampable(on="update")
+     * @Expose
+     * @Groups({"article_full"})
      */
     private $updated;
 
