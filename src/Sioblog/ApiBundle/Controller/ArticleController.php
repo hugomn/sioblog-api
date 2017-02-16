@@ -112,7 +112,7 @@ class ArticleController extends BaseController {
     }
 
     /**
-     * @Post("/articles/")
+     * @Post("/articles")
      * @ApiDoc(
      *   section = "Articles",
      *   description = "Creates a article",
